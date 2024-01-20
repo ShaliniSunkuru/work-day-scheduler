@@ -27,23 +27,27 @@ function setTimeblocks() {
         timeCol = hourRow.children(".hour");
         timeCol.text(thisHour.format("h A"));
     
-    //set color on timeblock textarea
+        //set color on timeblock textarea
+        setColor(thisHour, i);
+    }
+}
+
+function setColor(rowHour, i){
     var inputRow = $("#text" + i);
     var thisTextarea = inputRow.children(".workDesc");
-    if(dayjs().isAfter(thisHour) && dayjs().isBefore(thisHour.add(1, 'hour'))){
+    if(dayjs().isAfter(rowHour) && dayjs().isBefore(rowHour.add(1, 'hour'))){
             // if current hour is within timeblock row hour, present
         console.log("this hour");
         thisTextarea.addClass('present');
-    }else if(dayjs().isAfter(thisHour)){ 
+    }else if(dayjs().isAfter(rowHour)){ 
             //if current hour has past timeblock row hour, past
         console.log("past");
         thisTextarea.addClass('past');
-    }else if(dayjs().isBefore(thisHour)){
+    }else if(dayjs().isBefore(rowHourHour)){
             //if current hour is before timeblock row hour, future
         console.log("future");
         thisTextarea.addClass('future');
     }
-}
 }
 
 
