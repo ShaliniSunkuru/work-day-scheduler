@@ -3,7 +3,8 @@ var numberOfWorkingHours = 9;
 var hourRow;
 var timeCol;
 var textCol;
-
+var inputRow = $(".input-group");
+var localData = [];
 
 setCurrentDay();
 setTimeblocks();
@@ -37,18 +38,32 @@ function setColor(rowHour, i){
     var thisTextarea = inputRow.children(".workDesc");
     if(dayjs().isAfter(rowHour) && dayjs().isBefore(rowHour.add(1, 'hour'))){
             // if current hour is within timeblock row hour, present
-        console.log("this hour");
+        // console.log("this hour");
         thisTextarea.addClass('present');
     }else if(dayjs().isAfter(rowHour)){ 
             //if current hour has past timeblock row hour, past
-        console.log("past");
+        // console.log("past");
         thisTextarea.addClass('past');
-    }else if(dayjs().isBefore(rowHourHour)){
+    }else if(dayjs().isBefore(rowHour)){
             //if current hour is before timeblock row hour, future
         console.log("future");
         thisTextarea.addClass('future');
     }
 }
 
+inputRow.on("click",".saveBtn", function(event){
+    // console.log("button clicked")
+    var thisButton = $(event.target);
+    var thisText = thisButton.siblings(".workDesc").val();
+    var thisId = thisButton.parent().attr("id");
+    var thisData = {
+        id: thisId,
+        text: thisText
+    }
+    console.log(thisData)
+    localData.push(thisData);
+    console.log(localData)
+    
+})
 
 
