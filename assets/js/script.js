@@ -1,8 +1,3 @@
-
-var numberOfWorkingHours = 9;
-var hourRow;
-var timeCol;
-var textCol;
 var inputRow = $(".input-group");
 var localData = [];
 
@@ -21,11 +16,12 @@ function setCurrentDay() {
 
 function setTimeblocks() {
     //set time on the time column on timeblocks
+    var numberOfWorkingHours = 9;
     var startHour = dayjs().set('hour', 8).set('minute', 0).set('second', 0);
     for (var i = 1; i <= numberOfWorkingHours; i++) {
         var thisHour = startHour.add(i, 'hour');
-        hourRow = $("#hour" + i);
-        timeCol = hourRow.children(".hour");
+        var hourRow = $("#hour" + i);
+        var timeCol = hourRow.children(".hour");
         timeCol.text(thisHour.format("h A"));
     
         //set color on timeblock textarea
@@ -34,19 +30,16 @@ function setTimeblocks() {
 }
 
 function setColor(rowHour, i){
-    var inputRow = $("#text" + i);
-    var thisTextarea = inputRow.children(".workDesc");
+    var textRow = $("#text" + i);
+    var thisTextarea = textRow.children(".workDesc");
     if(dayjs().isAfter(rowHour) && dayjs().isBefore(rowHour.add(1, 'hour'))){
             // if current hour is within timeblock row hour, present
-        // console.log("this hour");
         thisTextarea.addClass('present');
     }else if(dayjs().isAfter(rowHour)){ 
             //if current hour has past timeblock row hour, past
-        // console.log("past");
         thisTextarea.addClass('past');
     }else if(dayjs().isBefore(rowHour)){
             //if current hour is before timeblock row hour, future
-        console.log("future");
         thisTextarea.addClass('future');
     }
 }
