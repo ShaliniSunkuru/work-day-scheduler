@@ -58,7 +58,7 @@ function setText(){
             inputGrp.children(".workDesc").val(data.text);
         });
     }else{
-        return;
+        localData=[];
     }
     
 }
