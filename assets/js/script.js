@@ -52,7 +52,7 @@ function setColor(rowHour, i){
 
 function setText(){
     // getLocalStorageData();
-    if(localStorage.length > 0){
+    if(localStorage.getItem("workData") !== null){
         localData = JSON.parse(localStorage.getItem("workData"));
            
         localData.forEach(function display(data){
@@ -74,7 +74,7 @@ inputRow.on("click",".saveBtn", function(event){
         id: thisId,
         text: thisText
     }
-    if(localStorage.length > 0){
+    if(localStorage.getItem("workData") !==  null){
         localData = JSON.parse(localStorage.getItem("workData"));
     }
     localData.push(thisData);
