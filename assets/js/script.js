@@ -13,10 +13,8 @@ setText();
 function setCurrentDay() {
     //p element to display current day
     var currentDayP = $('#currentDay');
-
     //get today's day using dayjs library
     var currentDay = dayjs().format("D MMMM YYYY");
-
     currentDayP.text(currentDay);
 }
 
@@ -28,8 +26,7 @@ function setTimeblocks() {
         var thisHour = startHour.add(i, 'hour');
         var hourRow = $("#hour" + i);
         var timeCol = hourRow.children(".hour");
-        timeCol.text(thisHour.format("h A"));
- 
+        timeCol.text(thisHour.format("h A")); 
         //set color on timeblock textarea
         setColor(thisHour, i);
     }
@@ -39,34 +36,30 @@ function setColor(rowHour, i){
     var textRow = $("#text" + i);
     var thisTextarea = textRow.children(".workDesc");
     if(dayjs().isAfter(rowHour) && dayjs().isBefore(rowHour.add(1, 'hour'))){
-            // if current hour is within timeblock row hour, present
+        // if current hour is within timeblock row hour, present
         thisTextarea.addClass('present');
     }else if(dayjs().isAfter(rowHour)){ 
-            //if current hour has past timeblock row hour, past
+        //if current hour has past timeblock row hour, past
         thisTextarea.addClass('past');
     }else if(dayjs().isBefore(rowHour)){
-            //if current hour is before timeblock row hour, future
+        //if current hour is before timeblock row hour, future
         thisTextarea.addClass('future');
     }
 }
 
 function setText(){
-    // getLocalStorageData();
+    //get data from local storage and assign it to textarea elements
     if(localStorage.getItem("workData") !== null){
-        localData = JSON.parse(localStorage.getItem("workData"));
-           
+        localData = JSON.parse(localStorage.getItem("workData"));    
         localData.forEach(function display(data){
             var inputGrp = $("#"+data.id);
             inputGrp.children(".workDesc").val(data.text);
             }); 
     }
-
-    }
-  
+    }  
       
-
+//event listener for save buttons
 inputRow.on("click",".saveBtn", function(event){
-    // console.log("button clicked")
     var thisButton = $(event.target);
     var thisText = thisButton.siblings(".workDesc").val().trim();
     var thisId = thisButton.parent().attr("id");
@@ -78,18 +71,7 @@ inputRow.on("click",".saveBtn", function(event){
         localData = JSON.parse(localStorage.getItem("workData"));
     }
     localData.push(thisData);
+    //update localStorage
     localStorage.setItem("workData", JSON.stringify(localData));
-    // updateLocalStorage();
 })
-// function getLocalStorageData(){
-//     if(localStorage.length > 0){
-//         localData = JSON.parse(localStorage.getItem("workData"));
-//     }else{
-//         localData = [];
-//     }
-// }
-// function updateLocalStorage(){
-    
-//     localStorage.setItem("workData", JSON.stringify(localData));
-// }
 
