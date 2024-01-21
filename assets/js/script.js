@@ -52,15 +52,11 @@ function setColor(rowHour, i){
 
 function setText(){
     getLocalStorageData();
-    if(!localData.length){
-        localData=[];
-    }else{
-        localData.forEach(function display(data){
-            var inputGrp = $("#"+data.id);
-            inputGrp.children(".workDesc").val(data.text);
-        });     
+    localData.forEach(function display(data){
+        var inputGrp = $("#"+data.id);
+        inputGrp.children(".workDesc").val(data.text);
+        });   
     }    
-}
 
 inputRow.on("click",".saveBtn", function(event){
     // console.log("button clicked")
@@ -78,6 +74,8 @@ inputRow.on("click",".saveBtn", function(event){
 function getLocalStorageData(){
     if(localStorage.length > 0){
         localData = JSON.parse(localStorage.getItem("workData"));
+    }else{
+        localData = [];
     }
 }
 function updateLocalStorage(){
