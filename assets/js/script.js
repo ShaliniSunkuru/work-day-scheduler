@@ -1,8 +1,14 @@
+
+//Global variables
 var inputRow = $(".input-group");
 var localData = [];
 
+//display current day on header
 setCurrentDay();
-setTimeblocks();
+//set time and color on timeblocks
+setTimeblocks(); 
+//display existing work descriptions on textareas
+setText();     
 
 function setCurrentDay() {
     //p element to display current day
@@ -23,7 +29,7 @@ function setTimeblocks() {
         var hourRow = $("#hour" + i);
         var timeCol = hourRow.children(".hour");
         timeCol.text(thisHour.format("h A"));
-    
+ 
         //set color on timeblock textarea
         setColor(thisHour, i);
     }
@@ -44,19 +50,34 @@ function setColor(rowHour, i){
     }
 }
 
+function setText(){
+    getLocalStorageData();
+    localData.forEach(function display(data){
+        var inputGrp = $("#"+data.id);
+        inputGrp.children(".workDesc").val(data.text);
+    });
+}
+
 inputRow.on("click",".saveBtn", function(event){
     // console.log("button clicked")
     var thisButton = $(event.target);
-    var thisText = thisButton.siblings(".workDesc").val();
+    var thisText = thisButton.siblings(".workDesc").val().trim();
     var thisId = thisButton.parent().attr("id");
     var thisData = {
         id: thisId,
         text: thisText
     }
-    console.log(thisData)
+    getLocalStorageData();
     localData.push(thisData);
-    console.log(localData)
-    
+    updateLocalStorage();
 })
-
+function getLocalStorageData(){
+    if(localStorage.length > 0){
+        localData = JSON.parse(localStorage.getItem("workData"));
+    }
+}
+function updateLocalStorage(){
+    
+    localStorage.setItem("workData", JSON.stringify(localData));
+}
 
