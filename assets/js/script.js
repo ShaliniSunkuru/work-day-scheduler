@@ -52,10 +52,13 @@ function setColor(rowHour, i){
 
 function setText(){
     getLocalStorageData();
-    localData.forEach(function display(data){
-        var inputGrp = $("#"+data.id);
-        inputGrp.children(".workDesc").val(data.text);
-        });   
+    if(localData != null){
+        localData.forEach(function display(data){
+            var inputGrp = $("#"+data.id);
+            inputGrp.children(".workDesc").val(data.text);
+            }); 
+    }
+  
     }    
 
 inputRow.on("click",".saveBtn", function(event){
