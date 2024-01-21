@@ -51,15 +51,19 @@ function setColor(rowHour, i){
 }
 
 function setText(){
-    getLocalStorageData();
-    if(localData != null){
+    // getLocalStorageData();
+    if(localStorage.length > 0){
+        localData = JSON.parse(localStorage.getItem("workData"));
+           
         localData.forEach(function display(data){
             var inputGrp = $("#"+data.id);
             inputGrp.children(".workDesc").val(data.text);
             }); 
     }
+
+    }
   
-    }    
+      
 
 inputRow.on("click",".saveBtn", function(event){
     // console.log("button clicked")
@@ -70,19 +74,22 @@ inputRow.on("click",".saveBtn", function(event){
         id: thisId,
         text: thisText
     }
-    getLocalStorageData();
-    localData.push(thisData);
-    updateLocalStorage();
-})
-function getLocalStorageData(){
     if(localStorage.length > 0){
         localData = JSON.parse(localStorage.getItem("workData"));
-    }else{
-        localData = [];
     }
-}
-function updateLocalStorage(){
-    
+    localData.push(thisData);
     localStorage.setItem("workData", JSON.stringify(localData));
-}
+    // updateLocalStorage();
+})
+// function getLocalStorageData(){
+//     if(localStorage.length > 0){
+//         localData = JSON.parse(localStorage.getItem("workData"));
+//     }else{
+//         localData = [];
+//     }
+// }
+// function updateLocalStorage(){
+    
+//     localStorage.setItem("workData", JSON.stringify(localData));
+// }
 
