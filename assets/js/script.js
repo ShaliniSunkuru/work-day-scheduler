@@ -6,9 +6,9 @@ var localData = [];
 //display current day on header
 setCurrentDay();
 //set time and color on timeblocks
-setTimeblocks(); 
+setTimeblocks();
 //display existing work descriptions on textareas
-setText();     
+setText();
 
 function setCurrentDay() {
     //p element to display current day
@@ -26,40 +26,40 @@ function setTimeblocks() {
         var thisHour = startHour.add(i, 'hour');
         var hourRow = $("#hour" + i);
         var timeCol = hourRow.children(".hour");
-        timeCol.text(thisHour.format("h A")); 
+        timeCol.text(thisHour.format("h A"));
         //set color on timeblock textarea
         setColor(thisHour, i);
     }
 }
 
-function setColor(rowHour, i){
+function setColor(rowHour, i) {
     var textRow = $("#text" + i);
     var thisTextarea = textRow.children(".workDesc");
-    if(dayjs().isAfter(rowHour) && dayjs().isBefore(rowHour.add(1, 'hour'))){
+    if (dayjs().isAfter(rowHour) && dayjs().isBefore(rowHour.add(1, 'hour'))) {
         // if current hour is within timeblock row hour, present
         thisTextarea.addClass('present');
-    }else if(dayjs().isAfter(rowHour)){ 
+    } else if (dayjs().isAfter(rowHour)) {
         //if current hour has past timeblock row hour, past
         thisTextarea.addClass('past');
-    }else if(dayjs().isBefore(rowHour)){
+    } else if (dayjs().isBefore(rowHour)) {
         //if current hour is before timeblock row hour, future
         thisTextarea.addClass('future');
     }
 }
 
-function setText(){
+function setText() {
     //get data from local storage and assign it to textarea elements
-    if(localStorage.getItem("workData") !== null){
-        localData = JSON.parse(localStorage.getItem("workData"));    
-        localData.forEach(function display(data){
-            var inputGrp = $("#"+data.id);
+    if (localStorage.getItem("workData") !== null) {
+        localData = JSON.parse(localStorage.getItem("workData"));
+        localData.forEach(function display(data) {
+            var inputGrp = $("#" + data.id);
             inputGrp.children(".workDesc").val(data.text);
-            }); 
+        });
     }
-    }  
-      
+}
+
 //event listener for save buttons
-inputRow.on("click",".saveBtn", function(event){
+inputRow.on("click", ".saveBtn", function (event) {
     var thisButton = $(event.target);
     var thisText = thisButton.siblings(".workDesc").val().trim();
     var thisId = thisButton.parent().attr("id");
@@ -67,7 +67,7 @@ inputRow.on("click",".saveBtn", function(event){
         id: thisId,
         text: thisText
     }
-    if(localStorage.getItem("workData") !==  null){
+    if (localStorage.getItem("workData") !== null) {
         localData = JSON.parse(localStorage.getItem("workData"));
     }
     localData.push(thisData);
