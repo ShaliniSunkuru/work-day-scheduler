@@ -26,7 +26,7 @@ function setTimeblocks() {
         var thisHour = startHour.add(i, 'hour');
         var hourRow = $("#hour" + i);
         var timeCol = hourRow.children(".hour");
-        timeCol.text(thisHour.format("h A"));
+        timeCol.text(thisHour.format("hA"));
         //set color on timeblock textarea
         setColor(thisHour, i);
     }
@@ -35,17 +35,17 @@ function setTimeblocks() {
 function setColor(rowHour, i) {
     var textRow = $("#text" + i);
     var thisTextarea = textRow.children(".workDesc");
-    if (dayjs().isAfter(rowHour) && dayjs().isBefore(rowHour.add(1, 'hour'))) {
-        // if current hour is within timeblock row hour, present
-        thisTextarea.addClass('present');
-    } else if (dayjs().isAfter(rowHour)) {
+    if (dayjs().isAfter(rowHour)) {
         //if current hour has past timeblock row hour, past
         thisTextarea.addClass('past');
     } else if (dayjs().isBefore(rowHour)) {
         //if current hour is before timeblock row hour, future
         thisTextarea.addClass('future');
+    }else {
+        // if current hour is within timeblock row hour, present
+        thisTextarea.addClass('present');
     }
-}
+} 
 
 function setText() {
     //get data from local storage and assign it to textarea elements
